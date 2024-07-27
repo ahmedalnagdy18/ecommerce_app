@@ -255,49 +255,54 @@ class _HomePageState extends State<HomePage> {
                       const SizedBox(height: 40),
                       SizedBox(
                         height: 200,
-                        child: PageView.builder(
-                          controller: _pageController,
-                          itemCount: 4,
-                          onPageChanged: (v) {
-                            setState(() {
-                              _currentPaga = v;
-                            });
-                          },
-                          itemBuilder: (context, index) {
-                            return Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                color: Colors.orange,
+                        child: Stack(
+                          children: [
+                            PageView.builder(
+                              controller: _pageController,
+                              itemCount: 4,
+                              onPageChanged: (v) {
+                                setState(() {
+                                  _currentPaga = v;
+                                });
+                              },
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    color: Colors.orange,
+                                  ),
+                                  clipBehavior: Clip.antiAlias,
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 22),
+                                  child: Image.network(
+                                    images[index],
+                                    fit: BoxFit.cover,
+                                  ),
+                                );
+                              },
+                            ),
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: DotsIndicator(
+                                dotsCount: 4,
+                                position: _currentPaga,
+                                decorator: const DotsDecorator(
+                                  size: Size.square(10),
+                                  activeSize: Size(24, 9),
+                                  activeShape: CircleBorder(
+                                    side: BorderSide(
+                                        color: Colors.black,
+                                        style: BorderStyle.solid),
+                                  ),
+                                  activeColor: Colors.white,
+                                  color: Colors.black,
+                                  spacing: EdgeInsets.all(3),
+                                ),
                               ),
-                              clipBehavior: Clip.antiAlias,
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 22),
-                              child: Image.network(
-                                images[index],
-                                fit: BoxFit.cover,
-                              ),
-                            );
-                          },
+                            ),
+                          ],
                         ),
                       ),
-                      Center(
-                        child: DotsIndicator(
-                          dotsCount: 4,
-                          position: _currentPaga,
-                          decorator: const DotsDecorator(
-                            size: Size.square(10),
-                            activeSize: Size(24, 9),
-                            activeShape: CircleBorder(
-                              side: BorderSide(
-                                  color: Colors.black,
-                                  style: BorderStyle.solid),
-                            ),
-                            activeColor: Colors.white,
-                            color: Colors.black,
-                            spacing: EdgeInsets.all(3),
-                          ),
-                        ),
-                      )
                     ],
                   ),
                 ),
