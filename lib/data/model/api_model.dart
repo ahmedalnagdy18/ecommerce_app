@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-class ApiModel {
+class ProductApiModel {
   final int? id;
   final String? title;
   final String? description;
@@ -24,7 +24,7 @@ class ApiModel {
   final List<String>? images;
   final String? thumbnail;
 
-  ApiModel({
+  ProductApiModel({
     this.id,
     this.title,
     this.description,
@@ -49,12 +49,13 @@ class ApiModel {
     this.thumbnail,
   });
 
-  factory ApiModel.fromRawJson(String str) =>
-      ApiModel.fromJson(json.decode(str));
+  factory ProductApiModel.fromRawJson(String str) =>
+      ProductApiModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 
-  factory ApiModel.fromJson(Map<String, dynamic> json) => ApiModel(
+  factory ProductApiModel.fromJson(Map<String, dynamic> json) =>
+      ProductApiModel(
         id: json["id"],
         title: json["title"],
         description: json["description"],

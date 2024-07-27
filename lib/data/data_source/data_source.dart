@@ -13,7 +13,7 @@ class RemoteDataSource {
       final Map<String, dynamic> data = jsonDecode(response.body);
       List<CardInfoEntity> getData = [];
       for (var element in data['products']) {
-        ApiModel apiModel = ApiModel.fromJson(element);
+        ProductApiModel apiModel = ProductApiModel.fromJson(element);
         getData.add(apiModel.cardMap());
       }
       return getData;

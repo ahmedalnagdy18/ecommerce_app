@@ -1,10 +1,10 @@
 import 'package:flutter_application_test/domain/entities/card_info_entity.dart';
-import 'package:flutter_application_test/domain/repository/repository.dart';
+import 'package:flutter_application_test/domain/repository/product_repository.dart';
 
-class Usecase {
+class ProductUsecase {
   final Repository repository;
 
-  Usecase({required this.repository});
+  ProductUsecase({required this.repository});
 
   Future<List<CardInfoEntity>> call() async {
     return await repository.getdata();

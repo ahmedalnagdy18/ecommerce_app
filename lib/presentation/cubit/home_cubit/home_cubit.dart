@@ -1,9 +1,9 @@
-import 'package:flutter_application_test/domain/usecase/usecase.dart';
+import 'package:flutter_application_test/domain/usecase/product_usecase.dart';
 import 'package:flutter_application_test/presentation/cubit/home_cubit/home_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PostsCubit extends Cubit<HomeState> {
-  final Usecase _usecase;
+  final ProductUsecase _usecase;
 
   PostsCubit(this._usecase) : super(PostsInitial());
 

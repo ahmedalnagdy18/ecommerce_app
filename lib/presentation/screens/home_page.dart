@@ -2,13 +2,13 @@ import 'dart:async';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_test/domain/usecase/usecase.dart';
+import 'package:flutter_application_test/domain/usecase/product_usecase.dart';
 import 'package:flutter_application_test/injection_container.dart';
 import 'package:flutter_application_test/presentation/cubit/home_cubit/home_cubit.dart';
 import 'package:flutter_application_test/presentation/cubit/home_cubit/home_state.dart';
 import 'package:flutter_application_test/presentation/screens/bottom_navigation_bar.dart';
 import 'package:flutter_application_test/presentation/screens/card_details.dart';
-import 'package:flutter_application_test/presentation/widgets/image.dart';
+import 'package:flutter_application_test/presentation/widgets/product_type_image.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MyHomepage extends StatelessWidget {
@@ -18,7 +18,7 @@ class MyHomepage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => PostsCubit(
-        Usecase(repository: sl()),
+        ProductUsecase(repository: sl()),
       )..fetchData(),
       child: const HomePage(),
     );
@@ -91,6 +91,7 @@ class _HomePageState extends State<HomePage> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 18),
                 child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -283,20 +284,17 @@ class _HomePageState extends State<HomePage> {
                         child: DotsIndicator(
                           dotsCount: 4,
                           position: _currentPaga,
-                          decorator: DotsDecorator(
-                            size: const Size.square(10),
-                            activeSize: const Size(24, 9),
-                            activeShape: RoundedRectangleBorder(
-                              side: const BorderSide(
+                          decorator: const DotsDecorator(
+                            size: Size.square(10),
+                            activeSize: Size(24, 9),
+                            activeShape: CircleBorder(
+                              side: BorderSide(
                                   color: Colors.black,
                                   style: BorderStyle.solid),
-                              borderRadius: BorderRadius.circular(
-                                5.0,
-                              ),
                             ),
                             activeColor: Colors.white,
                             color: Colors.black,
-                            spacing: const EdgeInsets.all(3),
+                            spacing: EdgeInsets.all(3),
                           ),
                         ),
                       )

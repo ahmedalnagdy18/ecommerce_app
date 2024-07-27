@@ -1,7 +1,7 @@
 import 'package:flutter_application_test/data/model/api_model.dart';
 import 'package:flutter_application_test/domain/entities/card_info_entity.dart';
 
-extension ConvertCardInfoEntityToApiModel on ApiModel {
+extension ConvertCardInfoEntityToApiModel on ProductApiModel {
   CardInfoEntity cardMap() {
     return CardInfoEntity(
       id: id,
