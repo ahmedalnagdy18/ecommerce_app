@@ -9,6 +9,7 @@ import 'package:flutter_application_test/presentation/cubit/home_cubit/home_cubi
 import 'package:flutter_application_test/presentation/cubit/home_cubit/home_state.dart';
 import 'package:flutter_application_test/presentation/screens/card_details.dart';
 import 'package:flutter_application_test/presentation/screens/search_page.dart';
+import 'package:flutter_application_test/presentation/screens/x_o_task.dart';
 import 'package:flutter_application_test/presentation/widgets/product_type_image.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,7 +35,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int selecteditem = -1;
   int selectedindex = 0;
   final PageController _pageController = PageController(initialPage: 0);
   late Timer _timer;
@@ -157,19 +157,16 @@ class _HomePageState extends State<HomePage> {
                           itemBuilder: (context, index) {
                             return InkWell(
                               onTap: () {
-                                setState(() {
-                                  selecteditem = index;
-                                });
+                                images[index] == images[0]
+                                    ? Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                        builder: (context) => const GameTask(),
+                                      ))
+                                    : null;
                               },
                               child: Container(
                                 width: 100,
                                 decoration: BoxDecoration(
-                                  border: selecteditem == index
-                                      ? Border.all(
-                                          color: Colors.yellow.shade700,
-                                          width: 3,
-                                        )
-                                      : null,
                                   borderRadius: BorderRadius.circular(6),
                                   color: Colors.blueGrey,
                                 ),
