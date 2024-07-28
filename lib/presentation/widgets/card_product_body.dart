@@ -80,7 +80,7 @@ class CardProuductWidget extends StatelessWidget {
               children: [
                 const SimiBoldTextWidget(text: 'Brand'),
                 MainTextWidget(
-                  text: brandText,
+                  text: brandText.isNotEmpty ? brandText : "...",
                 ),
               ],
             ),

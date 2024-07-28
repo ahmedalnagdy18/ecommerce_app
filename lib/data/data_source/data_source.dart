@@ -21,4 +21,22 @@ class RemoteDataSource {
       throw Exception('Failed to load posts');
     }
   }
+
+  Future<List<CardInfoEntity>> searchProducts(String searchText) async {
+    final response = await http.get(
+      Uri.parse('https://dummyjson.com/products/search?q=$searchText'),
+    );
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = jsonDecode(response.body);
+      List<CardInfoEntity> getData = [];
+      for (var element in data['products']) {
+        ProductApiModel apiModel = ProductApiModel.fromJson(element);
+        getData.add(apiModel.cardMap());
+      }
+      return getData;
+    } else {
+      throw Exception('Failed to load posts');
+    }
+  }
 }

@@ -3,11 +3,12 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_test/domain/usecase/product_usecase.dart';
+import 'package:flutter_application_test/domain/usecase/search_usecase.dart';
 import 'package:flutter_application_test/injection_container.dart';
 import 'package:flutter_application_test/presentation/cubit/home_cubit/home_cubit.dart';
 import 'package:flutter_application_test/presentation/cubit/home_cubit/home_state.dart';
-import 'package:flutter_application_test/presentation/screens/bottom_navigation_bar.dart';
 import 'package:flutter_application_test/presentation/screens/card_details.dart';
+import 'package:flutter_application_test/presentation/screens/search_page.dart';
 import 'package:flutter_application_test/presentation/widgets/product_type_image.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,9 +18,9 @@ class MyHomepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => PostsCubit(
-        ProductUsecase(repository: sl()),
-      )..fetchData(),
+      create: (context) => PostsCubit(ProductUsecase(repository: sl()),
+          SearchProductsUsecase(repository: sl()))
+        ..fetchData(),
       child: const HomePage(),
     );
   }
@@ -37,12 +38,6 @@ class _HomePageState extends State<HomePage> {
   int selectedindex = 0;
   final PageController _pageController = PageController(initialPage: 0);
   late Timer _timer;
-
-  void _onItemTapped(int value) {
-    setState(() {
-      selectedindex = value;
-    });
-  }
 
   @override
   void initState() {
@@ -82,10 +77,6 @@ class _HomePageState extends State<HomePage> {
         if (state is PostsLoaded) {
           return Scaffold(
             backgroundColor: Colors.white,
-            bottomNavigationBar: BottomNavigationBarWidget(
-              currentIndex: selectedindex,
-              onTap: _onItemTapped,
-            ),
             body: SafeArea(
               bottom: false,
               child: Padding(
@@ -118,17 +109,26 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       const SizedBox(height: 50),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 22),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            hintText: 'Search for agency',
-                            border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20)),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 22),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (cont) => BlocProvider.value(
+                                    value: context.read<PostsCubit>(),
+                                    child: const SearchPage())));
+                          },
+                          child: const TextField(
+                            enabled: false,
+                            decoration: InputDecoration(
+                              hintText: 'Search for agency',
+                              border: OutlineInputBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20)),
+                              ),
+                              fillColor: Colors.white,
+                              prefixIcon: Icon(Icons.search),
                             ),
-                            fillColor: Colors.white,
-                            prefixIcon: Icon(Icons.search),
                           ),
                         ),
                       ),
@@ -275,7 +275,7 @@ class _HomePageState extends State<HomePage> {
                                   margin: const EdgeInsets.symmetric(
                                       horizontal: 22),
                                   child: Image.network(
-                                    images[index],
+                                    images2[index],
                                     fit: BoxFit.cover,
                                   ),
                                 );
@@ -286,17 +286,17 @@ class _HomePageState extends State<HomePage> {
                               child: DotsIndicator(
                                 dotsCount: 4,
                                 position: _currentPaga,
-                                decorator: const DotsDecorator(
-                                  size: Size.square(10),
-                                  activeSize: Size(24, 9),
-                                  activeShape: CircleBorder(
+                                decorator: DotsDecorator(
+                                  size: const Size.square(10),
+                                  activeSize: const Size(12, 12),
+                                  activeShape: const CircleBorder(
                                     side: BorderSide(
                                         color: Colors.black,
                                         style: BorderStyle.solid),
                                   ),
-                                  activeColor: Colors.black,
+                                  activeColor: Colors.grey.shade700,
                                   color: Colors.white,
-                                  spacing: EdgeInsets.all(3),
+                                  spacing: const EdgeInsets.all(3),
                                 ),
                               ),
                             ),

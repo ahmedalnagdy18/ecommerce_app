@@ -19,3 +19,19 @@ class PostsError extends HomeState {
 
   const PostsError(this.message);
 }
+
+class SearchInitial extends HomeState {}
+
+class SearchLoading extends HomeState {}
+
+class SearchLoaded extends HomeState {
+  final List<CardInfoEntity> products;
+
+  SearchLoaded(this.products);
+}
+
+class SearchError extends HomeState {
+  final String message;
+
+  SearchError(this.message);
+}

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_test/presentation/screens/home_page.dart';
+import 'package:flutter_application_test/presentation/screens/main_home_page.dart';
 import 'injection_container.dart' as di;
 
 void main() async {
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: MyHomepage(),
+      home: MainPage(),
     );
   }
 }
