@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_test/presentation/screens/main_home_page.dart';
+import 'package:flutter_application_test/features/home/presentation/screens/main_home_page.dart';
 import 'injection_container.dart' as di;
 
 void main() async {

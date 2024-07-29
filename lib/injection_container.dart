@@ -1,11 +1,11 @@
-import 'package:flutter_application_test/data/data_source/data_source.dart';
-import 'package:flutter_application_test/data/reposatory_imp/repository_imp.dart';
-import 'package:flutter_application_test/data/reposatory_imp/search_repo_imp.dart';
-import 'package:flutter_application_test/domain/repository/product_repository.dart';
-import 'package:flutter_application_test/domain/repository/search_repository.dart';
-import 'package:flutter_application_test/domain/usecase/product_usecase.dart';
-import 'package:flutter_application_test/domain/usecase/search_usecase.dart';
-import 'package:flutter_application_test/presentation/cubit/home_cubit/home_cubit.dart';
+import 'package:flutter_application_test/features/home/data/data_source/data_source.dart';
+import 'package:flutter_application_test/features/home/data/reposatory_imp/repository_imp.dart';
+import 'package:flutter_application_test/features/home/data/reposatory_imp/search_repo_imp.dart';
+import 'package:flutter_application_test/features/home/domain/repository/product_repository.dart';
+import 'package:flutter_application_test/features/home/domain/repository/search_repository.dart';
+import 'package:flutter_application_test/features/home/domain/usecase/product_usecase.dart';
+import 'package:flutter_application_test/features/home/domain/usecase/search_usecase.dart';
+import 'package:flutter_application_test/features/home/presentation/cubit/home_cubit/home_cubit.dart';
 import 'package:get_it/get_it.dart';
 
 final sl = GetIt.instance;
