@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_test/core/common/text_theme.dart';
 import 'package:flutter_application_test/domain/usecase/product_usecase.dart';
 import 'package:flutter_application_test/domain/usecase/search_usecase.dart';
 import 'package:flutter_application_test/injection_container.dart';
@@ -9,8 +9,8 @@ import 'package:flutter_application_test/presentation/cubit/home_cubit/home_cubi
 import 'package:flutter_application_test/presentation/cubit/home_cubit/home_state.dart';
 import 'package:flutter_application_test/presentation/screens/card_details.dart';
 import 'package:flutter_application_test/presentation/screens/search_page.dart';
-import 'package:flutter_application_test/presentation/screens/x_o_task.dart';
-import 'package:flutter_application_test/presentation/widgets/product_type_image.dart';
+import 'package:flutter_application_test/presentation/widgets/accommodation_type.dart';
+import 'package:flutter_application_test/presentation/widgets/ads_banner.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MyHomepage extends StatelessWidget {
@@ -87,26 +87,15 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 22),
-                        child: Text(
-                          'Welcome Back !',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontSize: 24,
-                          ),
-                        ),
-                      ),
+                          padding: EdgeInsets.symmetric(horizontal: 22),
+                          child: Text(
+                            'Welcome Back !',
+                            style: TextAppTheme.mainBoldText,
+                          )),
                       const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 22),
-                        child: Text(
-                          'Discover your property',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            color: Colors.grey,
-                            fontSize: 14,
-                          ),
-                        ),
+                        child: Text('Discover your property',
+                            style: TextAppTheme.mainGreyBoldText),
                       ),
                       const SizedBox(height: 50),
                       Padding(
@@ -121,7 +110,7 @@ class _HomePageState extends State<HomePage> {
                           child: const TextField(
                             enabled: false,
                             decoration: InputDecoration(
-                              hintText: 'Search for agency',
+                              hintText: 'Search for product',
                               border: OutlineInputBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(20)),
@@ -133,63 +122,16 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       const SizedBox(height: 50),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 22),
-                        child: Text(
-                          'Accommodation Type',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      SizedBox(
-                        height: 110,
-                        child: ListView.separated(
-                          padding: const EdgeInsets.symmetric(horizontal: 22),
-                          physics: const BouncingScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: 4,
-                          scrollDirection: Axis.horizontal,
-                          separatorBuilder: (context, index) =>
-                              const SizedBox(width: 20),
-                          itemBuilder: (context, index) {
-                            return InkWell(
-                              onTap: () {
-                                images[index] == images[0]
-                                    ? Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                        builder: (context) => const GameTask(),
-                                      ))
-                                    : null;
-                              },
-                              child: Container(
-                                width: 100,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(6),
-                                  color: Colors.blueGrey,
-                                ),
-                                clipBehavior: Clip.antiAlias,
-                                child: Image.network(
-                                  images[index],
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
+                      //  Accommodation Type
+
+                      const AccommodationTypeWidget(),
                       const SizedBox(height: 30),
+
+                      //  Recommended For You
                       const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 22),
-                        child: Text(
-                          'Recommended For You',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            color: Colors.black,
-                          ),
-                        ),
+                        child: Text('Recommended For You',
+                            style: TextAppTheme.simiBoldText),
                       ),
                       const SizedBox(height: 12),
                       SizedBox(
@@ -250,55 +192,15 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       const SizedBox(height: 40),
-                      SizedBox(
-                        height: 200,
-                        child: Stack(
-                          children: [
-                            PageView.builder(
-                              controller: _pageController,
-                              itemCount: 4,
-                              onPageChanged: (v) {
-                                setState(() {
-                                  _currentPaga = v;
-                                });
-                              },
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    color: Colors.orange,
-                                  ),
-                                  clipBehavior: Clip.antiAlias,
-                                  margin: const EdgeInsets.symmetric(
-                                      horizontal: 22),
-                                  child: Image.network(
-                                    images2[index],
-                                    fit: BoxFit.cover,
-                                  ),
-                                );
-                              },
-                            ),
-                            Align(
-                              alignment: Alignment.bottomCenter,
-                              child: DotsIndicator(
-                                dotsCount: 4,
-                                position: _currentPaga,
-                                decorator: DotsDecorator(
-                                  size: const Size.square(10),
-                                  activeSize: const Size(12, 12),
-                                  activeShape: const CircleBorder(
-                                    side: BorderSide(
-                                        color: Colors.black,
-                                        style: BorderStyle.solid),
-                                  ),
-                                  activeColor: Colors.grey.shade700,
-                                  color: Colors.white,
-                                  spacing: const EdgeInsets.all(3),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                      //! ads banner
+                      AdsBannerWidget(
+                        controller: _pageController,
+                        onPageChanged: (v) {
+                          setState(() {
+                            _currentPaga = v;
+                          });
+                        },
+                        position: _currentPaga,
                       ),
                     ],
                   ),

@@ -22,10 +22,10 @@ class BottomNavigationBarWidget extends StatelessWidget {
           label: '',
           icon: Icons.home_max_outlined,
         ),
-        CustomBottomBarItems(icon: Icons.explore, label: ''),
+        CustomBottomBarItems(icon: Icons.shopping_cart_outlined, label: ''),
         CustomBottomBarItems(
           label: '',
-          icon: Icons.gavel,
+          icon: Icons.explore,
         ),
         CustomBottomBarItems(
           label: '',

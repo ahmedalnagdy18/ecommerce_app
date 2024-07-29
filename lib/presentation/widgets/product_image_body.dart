@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_test/core/common/text_theme.dart';
 import 'package:flutter_application_test/presentation/screens/home_page.dart';
-import 'package:flutter_application_test/core/common/text_widget.dart';
 
 class ProductImageBody extends StatelessWidget {
   const ProductImageBody(

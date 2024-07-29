@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_test/presentation/screens/add_to_cart.dart';
 import 'package:flutter_application_test/presentation/screens/bottom_navigation_bar.dart';
 import 'package:flutter_application_test/presentation/screens/home_page.dart';
-import 'package:flutter_application_test/presentation/screens/search_page.dart';
-import 'package:flutter_application_test/presentation/screens/setting_page.dart';
+import 'package:flutter_application_test/presentation/screens/my_profile.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key, this.name});
@@ -19,9 +19,9 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     name.addAll([
       const MyHomepage(),
-      const SearchPage(),
-      const SettingPage(),
-      const SettingPage(),
+      const AddToCart(),
+      const MyProfilePage(),
+      const MyProfilePage(),
     ]);
     super.initState();
   }

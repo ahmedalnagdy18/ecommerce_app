@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_test/core/common/button_widget.dart';
-import 'package:flutter_application_test/core/common/text_widget.dart';
+import 'package:flutter_application_test/core/common/text_theme.dart';
 
 class CardProuductWidget extends StatelessWidget {
   const CardProuductWidget(
@@ -42,7 +42,10 @@ class CardProuductWidget extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 30),
-            const DescribtionTextWidget(),
+            const Text(
+              'Description',
+              style: TextAppTheme.descriptionText,
+            ),
             const SizedBox(height: 12),
             MainTextWidget(
               text: descriptionText,
@@ -53,7 +56,10 @@ class CardProuductWidget extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const SimiBoldTextWidget(text: 'Discount'),
+                const Text(
+                  'Discount',
+                  style: TextAppTheme.simiBoldText,
+                ),
                 Text(
                   '\$ - $discountPercentage',
                   style: const TextStyle(
@@ -68,7 +74,10 @@ class CardProuductWidget extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const SimiBoldTextWidget(text: 'Category'),
+                const Text(
+                  'Category',
+                  style: TextAppTheme.simiBoldText,
+                ),
                 MainTextWidget(
                   text: categoryText,
                 ),
@@ -78,7 +87,10 @@ class CardProuductWidget extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const SimiBoldTextWidget(text: 'Brand'),
+                const Text(
+                  'Brand',
+                  style: TextAppTheme.simiBoldText,
+                ),
                 MainTextWidget(
                   text: brandText.isNotEmpty ? brandText : "...",
                 ),

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_test/core/common/text_widget.dart';
+import 'package:flutter_application_test/core/common/text_theme.dart';
 import 'package:flutter_application_test/presentation/cubit/home_cubit/home_cubit.dart';
 import 'package:flutter_application_test/presentation/cubit/home_cubit/home_state.dart';
 import 'package:flutter_application_test/presentation/screens/card_details.dart';
