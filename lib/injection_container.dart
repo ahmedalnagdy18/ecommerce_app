@@ -1,3 +1,4 @@
+import 'package:flutter_application_test/features/explore/presentation/cubit/explore_cubit.dart';
 import 'package:flutter_application_test/features/home/data/data_source/data_source.dart';
 import 'package:flutter_application_test/features/home/data/reposatory_imp/repository_imp.dart';
 import 'package:flutter_application_test/features/home/data/reposatory_imp/search_repo_imp.dart';
@@ -35,5 +36,10 @@ Future<void> init() async {
   sl.registerLazySingleton<PostsCubit>(
     () => PostsCubit(ProductUsecase(repository: sl()),
         SearchProductsUsecase(repository: sl())),
+  );
+  sl.registerLazySingleton<ExploreCubit>(
+    () => ExploreCubit(
+      ProductUsecase(repository: sl()),
+    ),
   );
 }

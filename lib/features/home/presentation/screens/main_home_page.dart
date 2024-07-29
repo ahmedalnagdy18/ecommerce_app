@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_test/features/home/presentation/screens/add_to_cart.dart';
 import 'package:flutter_application_test/features/home/presentation/screens/bottom_navigation_bar.dart';
-import 'package:flutter_application_test/features/home/presentation/screens/explore_page.dart';
+import 'package:flutter_application_test/features/explore/presentation/screens/explore_page.dart';
 import 'package:flutter_application_test/features/home/presentation/screens/home_page.dart';
 import 'package:flutter_application_test/features/home/presentation/screens/my_profile.dart';
 

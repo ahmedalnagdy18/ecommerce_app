@@ -149,7 +149,7 @@ class _HomePageState extends State<HomePage> {
                               width: 200,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
-                                color: Colors.blueGrey,
+                                color: Colors.grey.shade300,
                               ),
                               child: GestureDetector(
                                 onTap: () {
