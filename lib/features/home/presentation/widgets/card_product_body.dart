@@ -35,7 +35,7 @@ class CardProuductWidget extends StatelessWidget {
                   color: Colors.black,
                   text: '\$ $priceText',
                 ),
-                ButtonWiget(
+                AddToCartButton(
                   onPressed: () {},
                   buttonText: "Add to card",
                 )

@@ -9,14 +9,14 @@ class AddToCart extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: const Text('Add to cart'),
+        title: const Text('Cart'),
         centerTitle: true,
       ),
       body: const Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Center(
-            child: Text('Add to Cart'),
+            child: Text('No Item founded'),
           )
         ],
       ),

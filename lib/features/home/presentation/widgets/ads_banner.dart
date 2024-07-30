@@ -29,7 +29,7 @@ class AdsBannerWidget extends StatelessWidget {
                   return Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      color: Colors.orange,
+                      color: Colors.grey,
                     ),
                     clipBehavior: Clip.antiAlias,
                     margin: const EdgeInsets.symmetric(horizontal: 22),

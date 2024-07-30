@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_test/core/common/text_theme.dart';
-import 'package:flutter_application_test/features/home/presentation/screens/x_o_task.dart';
+import 'package:flutter_application_test/features/game/presentation/screens/add_task_page.dart';
 import 'package:flutter_application_test/features/home/presentation/widgets/product_type_image.dart';
 
 class AccommodationTypeWidget extends StatelessWidget {
@@ -30,7 +30,7 @@ class AccommodationTypeWidget extends StatelessWidget {
                 onTap: () {
                   images[index] == images[0]
                       ? Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const GameTask(),
+                          builder: (context) => const AddTaskGamePage(),
                         ))
                       : null;
                 },

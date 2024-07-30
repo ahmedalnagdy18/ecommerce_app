@@ -1,4 +1,8 @@
 import 'package:flutter_application_test/features/explore/presentation/cubit/explore_cubit.dart';
+import 'package:flutter_application_test/features/game/data/repository_imp.dart';
+import 'package:flutter_application_test/features/game/domain/repositories/game_repository.dart';
+import 'package:flutter_application_test/features/game/domain/usecases/game_usecase.dart';
+import 'package:flutter_application_test/features/game/presentation/cubits/game_cubit.dart';
 import 'package:flutter_application_test/features/home/data/data_source/data_source.dart';
 import 'package:flutter_application_test/features/home/data/reposatory_imp/repository_imp.dart';
 import 'package:flutter_application_test/features/home/data/reposatory_imp/search_repo_imp.dart';
@@ -20,6 +24,9 @@ Future<void> init() async {
   sl.registerLazySingleton<SearchProductsUsecase>(
       () => SearchProductsUsecase(repository: sl()));
 
+  sl.registerLazySingleton<GameUsecase>(
+      () => GameUsecase(gameRepository: sl()));
+
 // Repository
 
   sl.registerLazySingleton<Repository>(
@@ -27,6 +34,8 @@ Future<void> init() async {
 
   sl.registerLazySingleton<SearchProductRepository>(
       () => SearchProductRepositoryImpl(remoteDataSource: sl()));
+
+  sl.registerLazySingleton<GameRepository>(() => GameReposiatoryImp());
 
 // DataSource
 
@@ -40,6 +49,12 @@ Future<void> init() async {
   sl.registerLazySingleton<ExploreCubit>(
     () => ExploreCubit(
       ProductUsecase(repository: sl()),
+    ),
+  );
+
+  sl.registerLazySingleton<GameCubit>(
+    () => GameCubit(
+      GameUsecase(gameRepository: sl()),
     ),
   );
 }
