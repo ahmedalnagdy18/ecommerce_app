@@ -146,7 +146,7 @@ class _ExplorePage extends StatelessWidget {
                                             }
                                             return const Center(
                                               child: CupertinoActivityIndicator(
-                                                color: Colors.white,
+                                                color: Colors.black,
                                               ),
                                             );
                                           },
@@ -210,7 +210,7 @@ class _ExplorePage extends StatelessWidget {
         return Container(
           decoration: const BoxDecoration(color: Colors.white),
           child: const Center(
-            child: CupertinoActivityIndicator(),
+            child: CupertinoActivityIndicator(color: Colors.black),
           ),
         );
       }

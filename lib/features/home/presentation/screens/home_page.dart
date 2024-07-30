@@ -181,7 +181,7 @@ class _HomePageState extends State<HomePage> {
                                     }
                                     return const Center(
                                       child: CupertinoActivityIndicator(
-                                        color: Colors.white,
+                                        color: Colors.black,
                                       ),
                                     );
                                   },
@@ -212,7 +212,7 @@ class _HomePageState extends State<HomePage> {
           return Container(
             decoration: const BoxDecoration(color: Colors.white),
             child: const Center(
-              child: CupertinoActivityIndicator(),
+              child: CupertinoActivityIndicator(color: Colors.black),
             ),
           );
         }
