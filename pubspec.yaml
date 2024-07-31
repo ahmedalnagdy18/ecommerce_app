@@ -31,6 +31,7 @@ dependencies:
   cupertino_icons: ^1.0.6
   custom_line_indicator_bottom_navbar: ^0.0.8
   dots_indicator: ^3.0.0
+  equatable: ^2.0.5
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.6

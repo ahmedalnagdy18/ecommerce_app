@@ -8,8 +8,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class GamePage extends StatefulWidget {
   const GamePage({
     super.key,
+    required this.numberOfTasks,
+    required this.sequenceOfTasks,
   });
-
+  final int numberOfTasks;
+  final int sequenceOfTasks;
   @override
   State<GamePage> createState() => _TasksPageState();
 }
@@ -17,7 +20,6 @@ class GamePage extends StatefulWidget {
 class _TasksPageState extends State<GamePage>
     with SingleTickerProviderStateMixin {
   late final TabController tabController;
-
   @override
   void initState() {
     super.initState();
@@ -29,7 +31,7 @@ class _TasksPageState extends State<GamePage>
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios), // Your choice of icon
+          icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
             BlocProvider.of<GameCubit>(context).remove();
 
@@ -77,7 +79,11 @@ class _TasksPageState extends State<GamePage>
                   child: TabBarView(
                     controller: tabController,
                     children: [
-                      UnAssignedPage(tabController: tabController),
+                      UnAssignedPage(
+                        tabController: tabController,
+                        numberOfTasks: widget.numberOfTasks,
+                        sequenceOfTasks: widget.sequenceOfTasks,
+                      ),
                       AssignedPage(tabController: tabController),
                       const CompletedPage(),
                     ],

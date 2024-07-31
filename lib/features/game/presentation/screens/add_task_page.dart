@@ -108,7 +108,10 @@ class _AddTaskGameState extends State<AddTaskGame> {
                             Navigator.of(context).push(MaterialPageRoute(
                               builder: (cont) => BlocProvider.value(
                                   value: BlocProvider.of<GameCubit>(context),
-                                  child: const GamePage()),
+                                  child: GamePage(
+                                    numberOfTasks: numberOfTasks,
+                                    sequenceOfTasks: sequenceOfTasks,
+                                  )),
                             ));
                           } catch (e) {
                             ScaffoldMessenger.of(context).showSnackBar(
