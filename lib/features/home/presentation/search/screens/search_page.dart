@@ -42,13 +42,18 @@ class _SearchPageState extends State<SearchPage> {
               TextField(
                 onChanged: (value) => _searchOnChange(value),
                 controller: _searchController,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: 'Search for agency',
-                  border: OutlineInputBorder(
+                  border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                   ),
                   fillColor: Colors.white,
-                  prefixIcon: Icon(Icons.search),
+                  prefixIcon: const Icon(Icons.search),
+                  suffixIcon: IconButton(
+                      onPressed: () {
+                        _searchController.clear();
+                      },
+                      icon: const Icon(Icons.close)),
                 ),
               ),
               const SizedBox(height: 20),

@@ -48,8 +48,8 @@ class _AssignedPageState extends State<AssignedPage> {
     return BlocConsumer<GameCubit, GameState>(
       listener: (context, state) {
         if (task != null && task!.endTime.isBefore(DateTime.now())) {
-          BlocProvider.of<GameCubit>(context).close();
-          Navigator.pop(context);
+          BlocProvider.of<GameCubit>(context).cloose();
+          widget.tabController.animateTo(0);
         }
       },
       builder: (context, state) => state is TasksLoad && task != null

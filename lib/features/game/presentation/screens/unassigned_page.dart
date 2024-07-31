@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_test/features/game/presentation/cubits/game_cubit.dart';
 import 'package:flutter_application_test/features/game/presentation/cubits/game_state.dart';
@@ -42,9 +43,9 @@ class _UnAssignedPageState extends State<UnAssignedPage> {
                               },
                               icon: const Icon(Icons.refresh)),
                         )
-                      : Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 20),
-                          child: Expanded(
+                      : Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 20),
                             child: ListView.separated(
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,
@@ -69,14 +70,24 @@ class _UnAssignedPageState extends State<UnAssignedPage> {
                                     ),
                                     child: InkWell(
                                       onTap: () {
-                                        BlocProvider.of<GameCubit>(context)
-                                            .assignedTask = task;
+                                        if (!BlocProvider.of<GameCubit>(context)
+                                            .hasAssignedTask()) {
+                                          BlocProvider.of<GameCubit>(context)
+                                              .assignedTask = task;
 
-                                        BlocProvider.of<GameCubit>(context)
-                                            .gametasks
-                                            .remove(task);
+                                          BlocProvider.of<GameCubit>(context)
+                                              .gametasks
+                                              .remove(task);
 
-                                        widget.tabController.animateTo(1);
+                                          widget.tabController.animateTo(1);
+                                        } else {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(const SnackBar(
+                                            backgroundColor: Colors.red,
+                                            content: Text(
+                                                '''The last Game does'n finsh '''),
+                                          ));
+                                        }
                                       },
                                       child: Row(
                                         crossAxisAlignment:
@@ -100,7 +111,9 @@ class _UnAssignedPageState extends State<UnAssignedPage> {
             )
           : const Scaffold(
               backgroundColor: Colors.white,
-              body: Center(child: CircularProgressIndicator()),
+              body: Center(
+                child: CupertinoActivityIndicator(color: Colors.black),
+              ),
             ),
     );
   }

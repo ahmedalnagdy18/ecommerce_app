@@ -26,10 +26,14 @@ class GameCubit extends Cubit<GameState> {
     });
   }
 
-  @override
-  Future<void> close() {
-    _timer?.cancel();
-    return super.close();
+  // @override
+  // Future<void> close() {
+  //   _timer?.cancel();
+  //   assignedTask = null;
+  //   return super.close();
+  // }
+  void cloose() {
+    assignedTask = null;
   }
 
   completetask(GameEntity completedtasks) {
@@ -39,5 +43,11 @@ class GameCubit extends Cubit<GameState> {
 
   void remove() {
     gametasks.clear();
+    completetasks.clear();
+    assignedTask = null;
+  }
+
+  bool hasAssignedTask() {
+    return assignedTask != null;
   }
 }
