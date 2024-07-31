@@ -11,6 +11,7 @@ class GameCubit extends Cubit<GameState> {
   List<GameEntity> completetasks = [];
   List<GameEntity> gametasks = [];
   GameEntity? assignedTask;
+  // ignore: unused_field
   Timer? _timer;
   void getGameTask(int numberOfTasks, int sequenceOfTasks) {
     gametasks = gameUsecase(numberOfTasks, sequenceOfTasks);
@@ -26,18 +27,13 @@ class GameCubit extends Cubit<GameState> {
     });
   }
 
-  // @override
-  // Future<void> close() {
-  //   _timer?.cancel();
-  //   assignedTask = null;
-  //   return super.close();
-  // }
   void cloose() {
+    // gametasks.add(assignedTask!);
     assignedTask = null;
   }
 
   completetask(GameEntity completedtasks) {
-    completetasks.add(completedtasks);
+    //  completetasks.add(completedtasks);
     gametasks.remove(completedtasks);
   }
 

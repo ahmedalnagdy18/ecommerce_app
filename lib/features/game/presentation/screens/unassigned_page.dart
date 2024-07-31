@@ -52,9 +52,14 @@ class _UnAssignedPageState extends State<UnAssignedPage> {
                               physics: const BouncingScrollPhysics(),
                               separatorBuilder: (context, index) =>
                                   const SizedBox(height: 10),
-                              itemCount: state.tasks.length,
+                              itemCount: BlocProvider.of<GameCubit>(context)
+                                  .gametasks
+                                  .length,
+                              //state.tasks.length,
                               itemBuilder: (context, index) {
-                                final task = state.tasks[index];
+                                final task = BlocProvider.of<GameCubit>(context)
+                                    .gametasks[index];
+                                //  final task = state.tasks[index];
                                 final timeRemaining = _formatTime(task.endTime
                                     .difference(DateTime.now())
                                     .inSeconds);
