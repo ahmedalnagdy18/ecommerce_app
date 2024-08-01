@@ -15,7 +15,7 @@ class GameCubit extends Cubit<GameState> {
 
   void getGameTask(int numberOfTasks, int sequenceOfTasks) {
     gametasks.clear();
-    gametasks = gameUsecase(numberOfTasks, sequenceOfTasks);
+    gametasks = gameUsecase.excute(numberOfTasks, sequenceOfTasks);
     startTimer();
   }
 

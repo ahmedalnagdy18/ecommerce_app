@@ -5,7 +5,7 @@ class GameUsecase {
   final GameRepository gameRepository;
 
   GameUsecase({required this.gameRepository});
-  List<GameEntity> call(int numberOfTasks, int sequenceOfTasks) {
+  List<GameEntity> excute(int numberOfTasks, int sequenceOfTasks) {
     return gameRepository.addTask(numberOfTasks, sequenceOfTasks);
   }
 }
