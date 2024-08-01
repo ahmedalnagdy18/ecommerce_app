@@ -42,17 +42,17 @@ Future<void> init() async {
   sl.registerLazySingleton<RemoteDataSource>(() => RemoteDataSource());
 
   // Cubit
-  sl.registerLazySingleton<PostsCubit>(
+  sl.registerFactory<PostsCubit>(
     () => PostsCubit(ProductUsecase(repository: sl()),
         SearchProductsUsecase(repository: sl())),
   );
-  sl.registerLazySingleton<ExploreCubit>(
+  sl.registerFactory<ExploreCubit>(
     () => ExploreCubit(
       ProductUsecase(repository: sl()),
     ),
   );
 
-  sl.registerLazySingleton<GameCubit>(
+  sl.registerFactory<GameCubit>(
     () => GameCubit(
       GameUsecase(gameRepository: sl()),
     ),

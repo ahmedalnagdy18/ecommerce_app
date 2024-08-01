@@ -2,9 +2,10 @@ import 'package:flutter_application_test/features/game/domain/entities/game_enti
 import 'package:flutter_application_test/features/game/domain/repositories/game_repository.dart';
 
 class GameReposiatoryImp implements GameRepository {
-  List<GameEntity> allgametask = [];
   @override
   List<GameEntity> addTask(int numberOfTasks, int sequenceOfTasks) {
+    List<GameEntity> allgametask = [];
+
     for (var i = 0; i < numberOfTasks; i++) {
       allgametask.add(GameEntity(
         name: 'Game ${i + 1}',

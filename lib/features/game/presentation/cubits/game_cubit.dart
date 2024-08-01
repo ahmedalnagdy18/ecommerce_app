@@ -11,33 +11,51 @@ class GameCubit extends Cubit<GameState> {
   List<GameEntity> completetasks = [];
   List<GameEntity> gametasks = [];
   GameEntity? assignedTask;
-  // ignore: unused_field
   Timer? _timer;
+
   void getGameTask(int numberOfTasks, int sequenceOfTasks) {
+    gametasks.clear();
     gametasks = gameUsecase(numberOfTasks, sequenceOfTasks);
     startTimer();
   }
 
   void startTimer() {
+    _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       final now = DateTime.now();
       final updatedTasks =
           gametasks.where((task) => task.endTime.isAfter(now)).toList();
-      emit(TasksLoad(tasks: updatedTasks));
+
+      final expiredTasks =
+          gametasks.where((task) => task.endTime.isBefore(now)).toList();
+      for (var task in expiredTasks) {
+        task.endTime = now.add(Duration(seconds: task.duration));
+      }
+
+      gametasks = updatedTasks;
+
+      emit(TasksLoad(tasks: gametasks));
     });
   }
 
   void cloose() {
-    // gametasks.add(assignedTask!);
-    assignedTask = null;
+    if (assignedTask != null) {
+      assignedTask!.endTime =
+          DateTime.now().add(Duration(seconds: assignedTask!.duration));
+      gametasks.add(assignedTask!);
+      assignedTask = null;
+      // startTimer();
+    }
   }
 
   completetask(GameEntity completedtasks) {
-    //  completetasks.add(completedtasks);
+    completetasks.add(completedtasks);
     gametasks.remove(completedtasks);
   }
 
   void remove() {
+    _timer?.cancel();
+    _timer = null;
     gametasks.clear();
     completetasks.clear();
     assignedTask = null;
