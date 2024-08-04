@@ -4,10 +4,16 @@ abstract class GameState {
   const GameState();
 }
 
-final class TasksInitial extends GameState {}
+class TasksInitial extends GameState {}
 
-final class TasksLoad extends GameState {
-  List<GameEntity> tasks;
+class TasksLoad extends GameState {
+  final List<GameEntity> completetasks;
+  final List<GameEntity> unAssigned;
+  late final GameEntity? assignedTask;
 
-  TasksLoad({required this.tasks});
+  TasksLoad({
+    required this.completetasks,
+    required this.unAssigned,
+    this.assignedTask,
+  });
 }

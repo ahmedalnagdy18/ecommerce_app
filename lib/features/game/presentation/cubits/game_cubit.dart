@@ -7,61 +7,124 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class GameCubit extends Cubit<GameState> {
   final GameUsecase gameUsecase;
-  GameCubit(this.gameUsecase) : super(TasksInitial());
-  List<GameEntity> completetasks = [];
-  List<GameEntity> gametasks = [];
-  GameEntity? assignedTask;
   Timer? _timer;
 
+  GameCubit(this.gameUsecase) : super(TasksInitial());
+
   void getGameTask(int numberOfTasks, int sequenceOfTasks) {
-    gametasks.clear();
-    gametasks = gameUsecase.excute(numberOfTasks, sequenceOfTasks);
+    final gametasks = gameUsecase(numberOfTasks, sequenceOfTasks);
+    final completetasks = <GameEntity>[];
+
+    emit(TasksLoad(
+      completetasks: completetasks,
+      unAssigned: gametasks,
+    ));
+
     startTimer();
   }
 
   void startTimer() {
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      final now = DateTime.now();
-      final updatedTasks =
-          gametasks.where((task) => task.endTime.isAfter(now)).toList();
+      if (state is TasksLoad) {
+        final currentState = state as TasksLoad;
+        final now = DateTime.now();
 
-      final expiredTasks =
-          gametasks.where((task) => task.endTime.isBefore(now)).toList();
-      for (var task in expiredTasks) {
-        task.endTime = now.add(Duration(seconds: task.duration));
+        final updatedTasks = currentState.unAssigned
+            .where((task) => task.endTime.isAfter(now))
+            .toList();
+
+        final expiredTasks = currentState.unAssigned
+            .where((task) => task.endTime.isBefore(now))
+            .toList();
+
+        for (var task in expiredTasks) {
+          task.endTime = now.add(Duration(seconds: task.duration));
+        }
+
+        emit(TasksLoad(
+          completetasks: currentState.completetasks,
+          unAssigned: updatedTasks,
+          assignedTask: currentState.assignedTask,
+        ));
       }
-
-      gametasks = updatedTasks;
-
-      emit(TasksLoad(tasks: gametasks));
     });
   }
 
   void cloose() {
-    if (assignedTask != null) {
-      assignedTask!.endTime =
-          DateTime.now().add(Duration(seconds: assignedTask!.duration));
-      gametasks.add(assignedTask!);
-      assignedTask = null;
-      // startTimer();
+    if (state is TasksLoad) {
+      final currentState = state as TasksLoad;
+      if (currentState.assignedTask != null) {
+        final updatedAssignedTask = currentState.assignedTask!
+          ..endTime = DateTime.now()
+              .add(Duration(seconds: currentState.assignedTask!.duration));
+
+        final updatedUnAssignedTasks =
+            List<GameEntity>.from(currentState.unAssigned)
+              ..add(updatedAssignedTask);
+
+        emit(TasksLoad(
+          completetasks: currentState.completetasks,
+          unAssigned: updatedUnAssignedTasks,
+        ));
+      }
     }
   }
 
-  completetask(GameEntity completedtasks) {
-    completetasks.add(completedtasks);
-    gametasks.remove(completedtasks);
+  void completetask(GameEntity completedTask) {
+    if (state is TasksLoad) {
+      final currentState = state as TasksLoad;
+
+      final updatedCompleteTasks =
+          List<GameEntity>.from(currentState.completetasks)..add(completedTask);
+      final updatedUnAssignedTasks =
+          List<GameEntity>.from(currentState.unAssigned)..remove(completedTask);
+
+      emit(TasksLoad(
+        completetasks: updatedCompleteTasks,
+        unAssigned: updatedUnAssignedTasks,
+        assignedTask: currentState.assignedTask,
+      ));
+    }
   }
 
   void remove() {
     _timer?.cancel();
     _timer = null;
-    gametasks.clear();
-    completetasks.clear();
-    assignedTask = null;
+    emit(TasksInitial());
   }
 
   bool hasAssignedTask() {
-    return assignedTask != null;
+    if (state is TasksLoad) {
+      final currentState = state as TasksLoad;
+      return currentState.assignedTask != null;
+    }
+    return false;
+  }
+
+//! the updatedUnAssignedTasks is the new list that we remove from it the task
+  void assignTask(GameEntity task) {
+    if (state is TasksLoad) {
+      final currentState = state as TasksLoad;
+      final updatedUnAssignedTasks =
+          List<GameEntity>.from(currentState.unAssigned)..remove(task);
+
+      emit(TasksLoad(
+        completetasks: currentState.completetasks,
+        unAssigned: updatedUnAssignedTasks,
+        assignedTask: task,
+      ));
+    }
+  }
+
+  void resetAssigned() {
+    if (state is TasksLoad) {
+      final currentState = state as TasksLoad;
+      emit(TasksLoad(
+        completetasks: currentState.completetasks,
+        unAssigned: currentState.unAssigned,
+        assignedTask: null,
+      ));
+    }
   }
 }

@@ -39,116 +39,119 @@ class _AssignedPageState extends State<AssignedPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (task != null && task!.endTime.isBefore(DateTime.now())) {
-      task = null;
-    } else {
-      task = BlocProvider.of<GameCubit>(context).assignedTask;
-    }
+    //! to get the assignedtask in the state and to = task
+    task = (context.read<GameCubit>().state as TasksLoad).assignedTask;
 
     return BlocConsumer<GameCubit, GameState>(
       listener: (context, state) {
-        if (task != null && task!.endTime.isBefore(DateTime.now())) {
-          BlocProvider.of<GameCubit>(context).cloose();
-          widget.tabController.animateTo(0);
+        if (state is TasksLoad) {
+          task = state.assignedTask;
+          if (task != null && task!.endTime.isBefore(DateTime.now())) {
+            context.read<GameCubit>().cloose();
+            widget.tabController.animateTo(0);
+          }
         }
       },
-      builder: (context, state) => state is TasksLoad && task != null
-          ? Scaffold(
-              backgroundColor: Colors.white,
-              body: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                child: Column(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: Colors.grey.shade300,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 24, vertical: 15),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(task!.name),
-                            Text(_formatTime(task!.endTime
-                                    .difference(DateTime.now())
-                                    .inSeconds)
-                                .toString())
-                          ],
-                        ),
+      builder: (context, state) {
+        if (state is TasksLoad && task != null) {
+          return Scaffold(
+            backgroundColor: Colors.white,
+            body: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              child: Column(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: Colors.grey.shade300,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 15),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(task!.name),
+                          Text(_formatTime(task!.endTime
+                                  .difference(DateTime.now())
+                                  .inSeconds)
+                              .toString())
+                        ],
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    Text(
-                      "Player '${oTurn ? 'O' : 'X'}' Turn",
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black,
-                        fontSize: 18,
-                      ),
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    "Player '${oTurn ? 'O' : 'X'}' Turn",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                      fontSize: 18,
                     ),
-                    const SizedBox(height: 20),
-                    Expanded(
-                      flex: 4,
-                      child: GridView.builder(
-                        itemCount: gridViewList.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                        ),
-                        itemBuilder: (BuildContext context, int index) {
-                          return GestureDetector(
-                            onTap: () {
-                              _tapped(index);
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black),
-                                color: Colors.white,
-                              ),
-                              child: Center(
-                                child: Text(
-                                  gridViewList[index],
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 35,
-                                  ),
+                  ),
+                  const SizedBox(height: 20),
+                  Expanded(
+                    flex: 4,
+                    child: GridView.builder(
+                      itemCount: gridViewList.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                      ),
+                      itemBuilder: (BuildContext context, int index) {
+                        return GestureDetector(
+                          onTap: () {
+                            _tapped(index);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black),
+                              color: Colors.white,
+                            ),
+                            child: Center(
+                              child: Text(
+                                gridViewList[index],
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 35,
                                 ),
                               ),
                             ),
-                          );
-                        },
-                      ),
+                          ),
+                        );
+                      },
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            )
-          : task == null
-              ? const Scaffold(
-                  backgroundColor: Colors.white,
-                  body: Center(
-                    child: Text(
-                      "no assigned task",
-                    ),
-                  ))
-              : const Scaffold(
-                  body: Center(
-                  child: CircularProgressIndicator(),
-                )),
+            ),
+          );
+        } else if (task == null) {
+          return const Scaffold(
+            backgroundColor: Colors.white,
+            body: Center(
+              child: Text("No assigned task"),
+            ),
+          );
+        } else {
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+      },
     );
   }
 
   void _tapped(int index) {
-    if (gridViewList[index] != '' || !oTurn || gameOver) {
+    if (gridViewList[index] != '' || gameOver) {
       return;
     }
 
     setState(() {
-      gridViewList[index] = 'O';
+      gridViewList[index] = oTurn ? 'O' : 'X';
       filledBoxes++;
       oTurn = !oTurn;
       _checkWinner();
@@ -243,18 +246,17 @@ class _AssignedPageState extends State<AssignedPage> {
                 backgroundColor: WidgetStatePropertyAll(Colors.teal),
               ),
               onPressed: () {
+                Navigator.of(context).pop();
                 if (winner == 'X') {
-                  Navigator.of(context).pop();
                   _resetBoard();
                 } else {
                   BlocProvider.of<GameCubit>(context).completetask(task!);
-                  BlocProvider.of<GameCubit>(context).assignedTask = null;
-                  Navigator.of(context).pop();
                   widget.tabController.animateTo(0);
+                  BlocProvider.of<GameCubit>(context).resetAssigned();
                 }
               },
               child: const Text(
-                " Ok ",
+                "Ok",
                 style: TextStyle(color: Colors.white),
               ),
             ),
