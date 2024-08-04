@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_test/core/common/button_widget.dart';
 import 'package:flutter_application_test/core/common/text_theme.dart';
 
-class CardProuductWidget extends StatelessWidget {
+class CardProuductWidget extends StatefulWidget {
   const CardProuductWidget(
       {super.key,
       required this.priceText,
@@ -15,6 +15,13 @@ class CardProuductWidget extends StatelessWidget {
   final double discountPercentage;
   final String categoryText;
   final String brandText;
+
+  @override
+  State<CardProuductWidget> createState() => _CardProuductWidgetState();
+}
+
+class _CardProuductWidgetState extends State<CardProuductWidget> {
+  bool isExpanded = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,7 +40,7 @@ class CardProuductWidget extends StatelessWidget {
               children: [
                 TitleTextWidget(
                   color: Colors.black,
-                  text: '\$ $priceText',
+                  text: '\$ ${widget.priceText}',
                 ),
                 AddToCartButton(
                   onPressed: () {},
@@ -48,11 +55,25 @@ class CardProuductWidget extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             MainTextWidget(
-              text: descriptionText,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
+              text: widget.descriptionText,
+              maxLines: isExpanded ? null : 3,
+              overflow:
+                  isExpanded ? TextOverflow.visible : TextOverflow.ellipsis,
             ),
-            const SizedBox(height: 30),
+            Container(
+              alignment: Alignment.bottomRight,
+              child: TextButton(
+                child: const Text(
+                  'see more',
+                  style: TextStyle(fontSize: 12),
+                ),
+                onPressed: () {
+                  setState(() {
+                    isExpanded = !isExpanded;
+                  });
+                },
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -61,7 +82,7 @@ class CardProuductWidget extends StatelessWidget {
                   style: TextAppTheme.simiBoldText,
                 ),
                 Text(
-                  '\$ - $discountPercentage',
+                  '\$ - ${widget.discountPercentage}',
                   style: const TextStyle(
                     color: Colors.red,
                     fontWeight: FontWeight.w400,
@@ -79,7 +100,7 @@ class CardProuductWidget extends StatelessWidget {
                   style: TextAppTheme.simiBoldText,
                 ),
                 MainTextWidget(
-                  text: categoryText,
+                  text: widget.categoryText,
                 ),
               ],
             ),
@@ -92,7 +113,7 @@ class CardProuductWidget extends StatelessWidget {
                   style: TextAppTheme.simiBoldText,
                 ),
                 MainTextWidget(
-                  text: brandText.isNotEmpty ? brandText : "...",
+                  text: widget.brandText.isNotEmpty ? widget.brandText : "...",
                 ),
               ],
             ),
