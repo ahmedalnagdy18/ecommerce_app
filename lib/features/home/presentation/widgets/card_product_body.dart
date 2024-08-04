@@ -63,9 +63,9 @@ class _CardProuductWidgetState extends State<CardProuductWidget> {
             Container(
               alignment: Alignment.bottomRight,
               child: TextButton(
-                child: const Text(
-                  'see more',
-                  style: TextStyle(fontSize: 12),
+                child: Text(
+                  isExpanded ? 'see less' : 'see more',
+                  style: const TextStyle(fontSize: 12),
                 ),
                 onPressed: () {
                   setState(() {
