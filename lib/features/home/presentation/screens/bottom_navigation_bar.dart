@@ -19,16 +19,16 @@ class BottomNavigationBarWidget extends StatelessWidget {
       indicatorType: IndicatorType.Top,
       customBottomBarItems: [
         CustomBottomBarItems(
-          label: '',
+          label: 'Home',
           icon: Icons.home_max_outlined,
         ),
-        CustomBottomBarItems(icon: Icons.shopping_cart_outlined, label: ''),
+        CustomBottomBarItems(icon: Icons.shopping_cart_outlined, label: 'Cart'),
         CustomBottomBarItems(
-          label: '',
+          label: 'Explore',
           icon: Icons.explore,
         ),
         CustomBottomBarItems(
-          label: '',
+          label: 'Profile',
           icon: Icons.person_outlined,
         ),
       ],

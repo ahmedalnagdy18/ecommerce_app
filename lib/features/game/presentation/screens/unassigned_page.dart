@@ -41,7 +41,7 @@ class _UnAssignedPageState extends State<UnAssignedPage> {
                     ? Center(
                         child: IconButton(
                           onPressed: () {
-                            BlocProvider.of<GameCubit>(context).getGameTask(
+                            BlocProvider.of<GameCubit>(context).refresh(
                                 widget.numberOfTasks, widget.sequenceOfTasks);
                           },
                           icon: const Icon(Icons.refresh),

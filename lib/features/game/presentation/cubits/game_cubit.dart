@@ -23,6 +23,19 @@ class GameCubit extends Cubit<GameState> {
     startTimer();
   }
 
+  void refresh(int numberOfTasks, int sequenceOfTasks) {
+    final gametasks = gameUsecase(numberOfTasks, sequenceOfTasks);
+    final currentState = state as TasksLoad;
+    final completetasks = currentState.completetasks;
+
+    emit(TasksLoad(
+      completetasks: completetasks,
+      unAssigned: gametasks,
+    ));
+
+    startTimer();
+  }
+
   void startTimer() {
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -75,8 +88,9 @@ class GameCubit extends Cubit<GameState> {
     if (state is TasksLoad) {
       final currentState = state as TasksLoad;
 
-      final updatedCompleteTasks =
-          List<GameEntity>.from(currentState.completetasks)..add(completedTask);
+      List<GameEntity> updatedCompleteTasks =
+          List.from(currentState.completetasks)..add(completedTask);
+
       final updatedUnAssignedTasks =
           List<GameEntity>.from(currentState.unAssigned)..remove(completedTask);
 
