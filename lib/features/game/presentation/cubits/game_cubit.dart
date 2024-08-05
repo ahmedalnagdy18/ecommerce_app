@@ -42,19 +42,12 @@ class GameCubit extends Cubit<GameState> {
       if (state is TasksLoad) {
         final currentState = state as TasksLoad;
         final now = DateTime.now();
-
         final updatedTasks = currentState.unAssigned
             .where((task) => task.endTime.isAfter(now))
             .toList();
-
-        final expiredTasks = currentState.unAssigned
-            .where((task) => task.endTime.isBefore(now))
-            .toList();
-
-        for (var task in expiredTasks) {
-          task.endTime = now.add(Duration(seconds: task.duration));
+        if (updatedTasks.isEmpty && currentState.assignedTask == null) {
+          timer.cancel();
         }
-
         emit(TasksLoad(
           completetasks: currentState.completetasks,
           unAssigned: updatedTasks,

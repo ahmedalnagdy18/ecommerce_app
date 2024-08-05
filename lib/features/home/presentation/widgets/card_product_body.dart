@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_test/core/common/button_widget.dart';
 import 'package:flutter_application_test/core/common/text_theme.dart';
+import 'package:readmore/readmore.dart';
 
 class CardProuductWidget extends StatefulWidget {
   const CardProuductWidget(
@@ -21,7 +22,6 @@ class CardProuductWidget extends StatefulWidget {
 }
 
 class _CardProuductWidgetState extends State<CardProuductWidget> {
-  bool isExpanded = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -54,26 +54,24 @@ class _CardProuductWidgetState extends State<CardProuductWidget> {
               style: TextAppTheme.descriptionText,
             ),
             const SizedBox(height: 12),
-            MainTextWidget(
-              text: widget.descriptionText,
-              maxLines: isExpanded ? null : 3,
-              overflow:
-                  isExpanded ? TextOverflow.visible : TextOverflow.ellipsis,
-            ),
-            Container(
-              alignment: Alignment.bottomRight,
-              child: TextButton(
-                child: Text(
-                  isExpanded ? 'see less' : 'see more',
-                  style: const TextStyle(fontSize: 12),
-                ),
-                onPressed: () {
-                  setState(() {
-                    isExpanded = !isExpanded;
-                  });
-                },
+            ReadMoreText(
+              widget.descriptionText,
+              trimLines: 3,
+              trimMode: TrimMode.Line,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 14,
+              ),
+              lessStyle: const TextStyle(
+                color: Colors.red,
+                fontSize: 14,
+              ),
+              moreStyle: const TextStyle(
+                color: Colors.red,
+                fontSize: 14,
               ),
             ),
+            const SizedBox(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
