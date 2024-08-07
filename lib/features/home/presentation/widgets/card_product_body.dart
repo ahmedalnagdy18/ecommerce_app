@@ -41,9 +41,19 @@ class _CardProuductWidgetState extends State<CardProuductWidget> {
                 ),
                 AddToCartButton(
                   onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      backgroundColor: Colors.green,
+                      content: const Text('Item Added Successfully'),
+                      action: SnackBarAction(
+                        label: 'Undo',
+                        textColor: Colors.white,
+                        onPressed: () {},
+                      ),
+                    ));
                     context
                         .read<AddToCartCubit>()
                         .addItemToCart(widget.cardInfoEntity);
+                    Navigator.of(context).pop();
                   },
                   buttonText: "Add to card",
                 )
