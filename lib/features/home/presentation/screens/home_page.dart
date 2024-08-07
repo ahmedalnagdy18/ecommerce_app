@@ -157,14 +157,7 @@ class _HomePageState extends State<HomePage> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => CardDetails(
-                                        imageUrl: cardData.images?[0] ?? '',
-                                        price: cardData.price ?? 0.0,
-                                        title: cardData.title ?? '',
-                                        description: cardData.description ?? '',
-                                        discountPercentage:
-                                            cardData.discountPercentage ?? 0.0,
-                                        category: cardData.category ?? '',
-                                        brand: cardData.brand ?? '',
+                                        cardInfoEntity: cardData,
                                       ),
                                     ),
                                   );

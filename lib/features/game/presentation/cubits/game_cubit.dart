@@ -85,7 +85,8 @@ class GameCubit extends Cubit<GameState> {
           List.from(currentState.completetasks)..add(completedTask);
 
       final updatedUnAssignedTasks =
-          List<GameEntity>.from(currentState.unAssigned)..remove(completedTask);
+          List<GameEntity>.from(currentState.unAssigned)
+            ..remove(completedTask); //Cascade opreation & not return boolian
 
       emit(TasksLoad(
         completetasks: updatedCompleteTasks,
@@ -109,7 +110,6 @@ class GameCubit extends Cubit<GameState> {
     return false;
   }
 
-//! the updatedUnAssignedTasks is the new list that we remove from it the task
   void assignTask(GameEntity task) {
     if (state is TasksLoad) {
       final currentState = state as TasksLoad;

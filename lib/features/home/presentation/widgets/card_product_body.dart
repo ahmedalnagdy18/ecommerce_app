@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_test/core/common/button_widget.dart';
 import 'package:flutter_application_test/core/common/text_theme.dart';
+import 'package:flutter_application_test/features/home/domain/entities/card_info_entity.dart';
+import 'package:flutter_application_test/features/home/presentation/cubit/add_to_card_cubit/add_to_cart_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:readmore/readmore.dart';
 
 class CardProuductWidget extends StatefulWidget {
-  const CardProuductWidget(
-      {super.key,
-      required this.priceText,
-      required this.descriptionText,
-      required this.categoryText,
-      required this.brandText,
-      required this.discountPercentage});
-  final double priceText;
-  final String descriptionText;
-  final double discountPercentage;
-  final String categoryText;
-  final String brandText;
+  final CardInfoEntity cardInfoEntity;
+
+  const CardProuductWidget({
+    super.key,
+    required this.cardInfoEntity,
+  });
 
   @override
   State<CardProuductWidget> createState() => _CardProuductWidgetState();
@@ -40,10 +37,14 @@ class _CardProuductWidgetState extends State<CardProuductWidget> {
               children: [
                 TitleTextWidget(
                   color: Colors.black,
-                  text: '\$ ${widget.priceText}',
+                  text: '\$ ${widget.cardInfoEntity.price}',
                 ),
                 AddToCartButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context
+                        .read<AddToCartCubit>()
+                        .addItemToCart(widget.cardInfoEntity);
+                  },
                   buttonText: "Add to card",
                 )
               ],
@@ -55,7 +56,7 @@ class _CardProuductWidgetState extends State<CardProuductWidget> {
             ),
             const SizedBox(height: 12),
             ReadMoreText(
-              widget.descriptionText,
+              widget.cardInfoEntity.description ?? '',
               trimLines: 3,
               trimMode: TrimMode.Line,
               style: const TextStyle(
@@ -80,7 +81,7 @@ class _CardProuductWidgetState extends State<CardProuductWidget> {
                   style: TextAppTheme.simiBoldText,
                 ),
                 Text(
-                  '\$ - ${widget.discountPercentage}',
+                  '\$ - ${widget.cardInfoEntity.discountPercentage}',
                   style: const TextStyle(
                     color: Colors.red,
                     fontWeight: FontWeight.w400,
@@ -98,7 +99,7 @@ class _CardProuductWidgetState extends State<CardProuductWidget> {
                   style: TextAppTheme.simiBoldText,
                 ),
                 MainTextWidget(
-                  text: widget.categoryText,
+                  text: widget.cardInfoEntity.category ?? "",
                 ),
               ],
             ),
@@ -111,7 +112,9 @@ class _CardProuductWidgetState extends State<CardProuductWidget> {
                   style: TextAppTheme.simiBoldText,
                 ),
                 MainTextWidget(
-                  text: widget.brandText.isNotEmpty ? widget.brandText : "...",
+                  text: widget.cardInfoEntity.brand!.isEmpty
+                      ? widget.cardInfoEntity.brand ?? ''
+                      : "...",
                 ),
               ],
             ),

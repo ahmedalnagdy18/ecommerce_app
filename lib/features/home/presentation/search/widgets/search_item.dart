@@ -16,13 +16,7 @@ class SearchItem extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => CardDetails(
-              imageUrl: post.images?[0] ?? '',
-              price: post.price ?? 0.0,
-              title: post.title ?? '',
-              description: post.description ?? '',
-              discountPercentage: post.discountPercentage ?? 0.0,
-              category: post.category ?? '',
-              brand: post.brand ?? '',
+              cardInfoEntity: post,
             ),
           ),
         );

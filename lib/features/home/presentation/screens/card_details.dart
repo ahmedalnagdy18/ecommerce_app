@@ -1,25 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_test/features/home/domain/entities/card_info_entity.dart';
 import 'package:flutter_application_test/features/home/presentation/widgets/card_product_body.dart';
 import 'package:flutter_application_test/features/home/presentation/widgets/product_image_body.dart';
 
 class CardDetails extends StatelessWidget {
-  final double price;
-  final String title;
-  final String imageUrl;
-  final String description;
-  final double discountPercentage;
-  final String category;
-  final String brand;
+  final CardInfoEntity cardInfoEntity;
 
-  const CardDetails(
-      {super.key,
-      required this.imageUrl,
-      required this.price,
-      required this.title,
-      required this.description,
-      required this.discountPercentage,
-      required this.category,
-      required this.brand});
+  const CardDetails({
+    super.key,
+    required this.cardInfoEntity,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -34,17 +24,11 @@ class CardDetails extends StatelessWidget {
           children: [
             ProductImageBody(
               containerHeight: queryData.size.height * 0.40,
-              image: imageUrl,
-              titletext: title,
+              image: (cardInfoEntity.images ?? []).firstOrNull ?? '',
+              titletext: cardInfoEntity.title ?? '',
             ),
             Expanded(
-              child: CardProuductWidget(
-                brandText: brand,
-                categoryText: category,
-                descriptionText: description,
-                discountPercentage: discountPercentage,
-                priceText: price,
-              ),
+              child: CardProuductWidget(cardInfoEntity: cardInfoEntity),
             )
           ],
         ),
