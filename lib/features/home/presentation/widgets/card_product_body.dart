@@ -21,6 +21,8 @@ class CardProuductWidget extends StatefulWidget {
 class _CardProuductWidgetState extends State<CardProuductWidget> {
   @override
   Widget build(BuildContext context) {
+    final cardInfo = widget.cardInfoEntity;
+
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
       width: double.infinity,
@@ -37,12 +39,13 @@ class _CardProuductWidgetState extends State<CardProuductWidget> {
               children: [
                 TitleTextWidget(
                   color: Colors.black,
-                  text: '\$ ${widget.cardInfoEntity.price}',
+                  text: '\$ ${cardInfo.price ?? 'N/A'}',
                 ),
                 AddToCartButton(
                   onPressed: () {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       backgroundColor: Colors.green,
+                      duration: const Duration(seconds: 1),
                       content: const Text('Item Added Successfully'),
                       action: SnackBarAction(
                         label: 'Undo',
@@ -50,12 +53,10 @@ class _CardProuductWidgetState extends State<CardProuductWidget> {
                         onPressed: () {},
                       ),
                     ));
-                    context
-                        .read<AddToCartCubit>()
-                        .addItemToCart(widget.cardInfoEntity);
+                    context.read<AddToCartCubit>().addItemToCart(cardInfo);
                     Navigator.of(context).pop();
                   },
-                  buttonText: "Add to card",
+                  buttonText: "Add to cart",
                 )
               ],
             ),
@@ -66,7 +67,7 @@ class _CardProuductWidgetState extends State<CardProuductWidget> {
             ),
             const SizedBox(height: 12),
             ReadMoreText(
-              widget.cardInfoEntity.description ?? '',
+              cardInfo.description ?? 'No description available',
               trimLines: 3,
               trimMode: TrimMode.Line,
               style: const TextStyle(
@@ -91,7 +92,7 @@ class _CardProuductWidgetState extends State<CardProuductWidget> {
                   style: TextAppTheme.simiBoldText,
                 ),
                 Text(
-                  '\$ - ${widget.cardInfoEntity.discountPercentage}',
+                  '\$ - ${cardInfo.discountPercentage?.toString() ?? '0.00'}',
                   style: const TextStyle(
                     color: Colors.red,
                     fontWeight: FontWeight.w400,
@@ -109,7 +110,7 @@ class _CardProuductWidgetState extends State<CardProuductWidget> {
                   style: TextAppTheme.simiBoldText,
                 ),
                 MainTextWidget(
-                  text: widget.cardInfoEntity.category ?? "",
+                  text: cardInfo.category ?? 'Unknown',
                 ),
               ],
             ),
@@ -122,9 +123,9 @@ class _CardProuductWidgetState extends State<CardProuductWidget> {
                   style: TextAppTheme.simiBoldText,
                 ),
                 MainTextWidget(
-                  text: widget.cardInfoEntity.brand!.isEmpty
-                      ? widget.cardInfoEntity.brand ?? ''
-                      : "...",
+                  text: cardInfo.brand?.isNotEmpty == true
+                      ? cardInfo.brand!
+                      : 'No brand info',
                 ),
               ],
             ),

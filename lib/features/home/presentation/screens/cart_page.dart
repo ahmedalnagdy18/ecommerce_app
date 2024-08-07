@@ -129,6 +129,9 @@ class _AddToCart extends StatelessWidget {
                                                                 context)
                                                             .showSnackBar(
                                                                 SnackBar(
+                                                          duration:
+                                                              const Duration(
+                                                                  seconds: 1),
                                                           backgroundColor:
                                                               Colors.grey,
                                                           content: const Text(
