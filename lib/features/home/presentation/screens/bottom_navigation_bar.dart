@@ -11,7 +11,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
     return CustomLineIndicatorBottomNavbar(
       unselectedIconSize: 20,
       selectedIconSize: 20,
-      selectedColor: Colors.yellow.shade700,
+      selectedColor: Colors.black,
       unSelectedColor: Colors.black54,
       backgroundColor: Colors.white,
       enableLineIndicator: true,

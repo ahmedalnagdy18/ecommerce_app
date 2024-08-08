@@ -11,7 +11,7 @@ class AddToCartButton extends StatelessWidget {
       height: 40,
       //   minWidth: 120,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-      color: Colors.yellow.shade700,
+      color: Colors.black,
       elevation: 0,
 
       onPressed: onPressed,

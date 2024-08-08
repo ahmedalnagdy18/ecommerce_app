@@ -89,12 +89,16 @@ class ReadMoreWidget extends StatelessWidget {
         fontSize: 14,
       ),
       lessStyle: const TextStyle(
-        color: Colors.red,
+        color: Colors.black,
         fontSize: 14,
+        fontWeight: FontWeight.w500,
+        decoration: TextDecoration.underline,
       ),
       moreStyle: const TextStyle(
-        color: Colors.red,
+        color: Colors.black,
         fontSize: 14,
+        fontWeight: FontWeight.w500,
+        decoration: TextDecoration.underline,
       ),
     );
   }
