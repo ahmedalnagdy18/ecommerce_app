@@ -43,21 +43,23 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     _timer = Timer.periodic(const Duration(seconds: 3), (Timer timer) {
-      if (_pageController.page == 3) {
-        _pageController.animateToPage(
-          _pageController.initialPage,
-          duration: const Duration(milliseconds: 200),
-          curve: Curves.easeIn,
-        );
-      } else {
-        setState(() {
+      if (_pageController.hasClients) {
+        if (_pageController.page == 3) {
+          _pageController.animateToPage(
+            _pageController.initialPage,
+            duration: const Duration(milliseconds: 200),
+            curve: Curves.easeIn,
+          );
+        } else {
           _pageController.nextPage(
             duration: const Duration(milliseconds: 1000),
             curve: Curves.easeIn,
           );
+        }
+        setState(() {
+          _currentPaga = _pageController.page?.toInt() ?? 0;
         });
       }
-      _currentPaga = _pageController.page?.toInt() ?? 1;
     });
   }
 
