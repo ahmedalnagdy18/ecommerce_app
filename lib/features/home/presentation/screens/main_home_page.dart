@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_test/features/home/presentation/screens/cart_page.dart';
@@ -18,6 +19,7 @@ class _MainPageState extends State<MainPage> {
   List<Widget> screens = [];
   int selectedIndex = 0;
   bool _hasInternet = true;
+  late Timer _timer;
 
   @override
   void initState() {
@@ -29,25 +31,29 @@ class _MainPageState extends State<MainPage> {
       const ExplorePage(),
       const MyProfilePage(),
     ]);
+
+    _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
+      _checkInternetConnectivity();
+    });
   }
 
   Future<void> _checkInternetConnectivity() async {
     try {
       final result = await InternetAddress.lookup('google.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        setState(() {
-          _hasInternet = true;
-        });
-      } else {
-        setState(() {
-          _hasInternet = false;
-        });
-      }
+      setState(() {
+        _hasInternet = result.isNotEmpty && result[0].rawAddress.isNotEmpty;
+      });
     } on SocketException catch (_) {
       setState(() {
         _hasInternet = false;
       });
     }
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
   }
 
   @override
