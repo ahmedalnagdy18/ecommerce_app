@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_test/core/common/button_widget.dart';
+import 'package:flutter_application_test/core/common/message_alert.dart';
 import 'package:flutter_application_test/core/common/text_theme.dart';
 import 'package:flutter_application_test/features/home/domain/entities/card_info_entity.dart';
 import 'package:flutter_application_test/features/home/presentation/cubit/add_to_card_cubit/add_to_cart_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:readmore/readmore.dart';
 
 class CardProuductWidget extends StatefulWidget {
   final CardInfoEntity cardInfoEntity;
@@ -43,16 +43,11 @@ class _CardProuductWidgetState extends State<CardProuductWidget> {
                 ),
                 AddToCartButton(
                   onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      backgroundColor: Colors.green,
-                      duration: const Duration(seconds: 1),
-                      content: const Text('Item Added Successfully'),
-                      action: SnackBarAction(
-                        label: 'Undo',
-                        textColor: Colors.white,
-                        onPressed: () {},
-                      ),
-                    ));
+                    const snackbar = SnackbarWidget(
+                      text: 'Item Added Successfully',
+                      backgroundColor: Colors.black,
+                    );
+                    snackbar.showCustomSnackBar(context);
                     context.read<AddToCartCubit>().addItemToCart(cardInfo);
                     Navigator.of(context).pop();
                   },
@@ -66,23 +61,8 @@ class _CardProuductWidgetState extends State<CardProuductWidget> {
               style: TextAppTheme.descriptionText,
             ),
             const SizedBox(height: 12),
-            ReadMoreText(
-              cardInfo.description ?? 'No description available',
-              trimLines: 3,
-              trimMode: TrimMode.Line,
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 14,
-              ),
-              lessStyle: const TextStyle(
-                color: Colors.red,
-                fontSize: 14,
-              ),
-              moreStyle: const TextStyle(
-                color: Colors.red,
-                fontSize: 14,
-              ),
-            ),
+            ReadMoreWidget(
+                text: cardInfo.description ?? 'No description available'),
             const SizedBox(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

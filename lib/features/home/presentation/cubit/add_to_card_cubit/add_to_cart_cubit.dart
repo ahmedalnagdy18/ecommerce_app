@@ -22,9 +22,12 @@ class AddToCartCubit extends Cubit<AddtoCartState> {
   double calculateTotalPrice() {
     if (state is CartState) {
       final cartItems = (state as CartState).cartItems;
-      return cartItems.fold(
-          0, (total, item) => total + (item.price! - item.discountPercentage!));
+      return cartItems.fold(0.0, (total, item) {
+        final itemEffectivePrice = (item.price! - item.discountPercentage!)
+            .clamp(0.0, double.infinity);
+        return total + itemEffectivePrice;
+      });
     }
-    return 0;
+    return 0.0;
   }
 }
