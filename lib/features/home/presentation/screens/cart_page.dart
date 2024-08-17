@@ -24,6 +24,7 @@ class _AddToCart extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
+        centerTitle: true,
         title: const Text('Cart'),
       ),
       body: SafeArea(
