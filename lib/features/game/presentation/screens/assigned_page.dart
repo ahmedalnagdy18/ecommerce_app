@@ -238,9 +238,10 @@ class _AssignedPageState extends State<AssignedPage> {
         actions: [
           Center(
             child: TextButton(
-              style: const ButtonStyle(
-                shape: WidgetStatePropertyAll(RoundedRectangleBorder()),
-                backgroundColor: WidgetStatePropertyAll(Colors.teal),
+              style: ButtonStyle(
+                shape:
+                    MaterialStateProperty.all(const RoundedRectangleBorder()),
+                backgroundColor: MaterialStateProperty.all(Colors.teal),
               ),
               onPressed: () {
                 if (winner == 'X') {
