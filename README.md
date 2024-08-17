@@ -19,7 +19,7 @@ This ecommerce App is developed using the rest api platform and the Flutter fram
 
 <table>
   <tr>
-    <td><img src="https://github.com/ahmedalnagdy18/social_app/assets/9c8e8a85-1cb9-4466-9481-0e129606a942" alt="pic1" width="200"/></td>
+    <td><img src="https://github.com/user-attachments/assets/9c8e8a85-1cb9-4466-9481-0e129606a942" alt="pic1" width="200"/></td>
     <td><img src="https://github.com/ahmedalnagdy18/social_app/assets/71b5a706-2e27-45e7-8b5a-d7fb9a0d3830" alt="pic2" width="200"/></td>
     <td><img src="https://github.com/ahmedalnagdy18/social_app/assets/fdbe5af8-190a-4502-ae3e-abe01a4c647c" alt="pic3" width="200"/></td>
   </tr>
