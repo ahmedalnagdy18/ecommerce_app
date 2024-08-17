@@ -11,7 +11,7 @@ class BottomNavigationBarWidget extends StatelessWidget {
     return CustomLineIndicatorBottomNavbar(
       unselectedIconSize: 20,
       selectedIconSize: 20,
-      selectedColor: Colors.yellow.shade700,
+      selectedColor: Colors.black,
       unSelectedColor: Colors.black54,
       backgroundColor: Colors.white,
       enableLineIndicator: true,
@@ -19,16 +19,16 @@ class BottomNavigationBarWidget extends StatelessWidget {
       indicatorType: IndicatorType.Top,
       customBottomBarItems: [
         CustomBottomBarItems(
-          label: '',
+          label: 'Home',
           icon: Icons.home_max_outlined,
         ),
-        CustomBottomBarItems(icon: Icons.shopping_cart_outlined, label: ''),
+        CustomBottomBarItems(icon: Icons.shopping_cart_outlined, label: 'Cart'),
         CustomBottomBarItems(
-          label: '',
+          label: 'Explore',
           icon: Icons.explore,
         ),
         CustomBottomBarItems(
-          label: '',
+          label: 'Profile',
           icon: Icons.person_outlined,
         ),
       ],

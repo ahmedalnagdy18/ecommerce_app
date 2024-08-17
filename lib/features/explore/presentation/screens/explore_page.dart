@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_test/core/common/text_theme.dart';
 import 'package:flutter_application_test/features/explore/presentation/cubit/explore_cubit.dart';
 import 'package:flutter_application_test/features/explore/presentation/cubit/explore_state.dart';
+import 'package:flutter_application_test/features/explore/presentation/widget/explore_item_body.dart';
+import 'package:flutter_application_test/features/explore/presentation/widget/sale_animition_part.dart';
 import 'package:flutter_application_test/features/home/domain/usecase/product_usecase.dart';
 import 'package:flutter_application_test/features/home/presentation/screens/card_details.dart';
 import 'package:flutter_application_test/injection_container.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:widget_and_text_animator/widget_and_text_animator.dart';
 
 class ExplorePage extends StatelessWidget {
   const ExplorePage({super.key});
@@ -46,47 +46,12 @@ class _ExplorePage extends StatelessWidget {
           body: Stack(
             children: [
               Positioned(
-                top: 0,
-                left: 0,
-                right: 0,
-                child: Container(
-                  height: containerHeight,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(22),
-                      bottomRight: Radius.circular(22),
-                    ),
-                    color: Colors.black,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Center(
-                        child: Text(
-                          'Sale Up To',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 20),
-                      Center(
-                        child: WidgetAnimator(
-                          atRestEffect: WidgetRestingEffects.swing(),
-                          child: const Text(
-                            '60 \$',
-                            style: TextStyle(
-                              color: Colors.red,
-                              fontSize: 24,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  child: SaleAnimationWidget(
+                    height: containerHeight, // sale animation part
+                  )),
               Padding(
                 padding: EdgeInsets.only(top: containerHeight),
                 child: SingleChildScrollView(
@@ -114,111 +79,19 @@ class _ExplorePage extends StatelessWidget {
                             itemBuilder: (context, index) {
                               final post = postState[index];
                               return GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => CardDetails(
-                                        imageUrl: post.images?[0] ?? '',
-                                        price: post.price ?? 0.0,
-                                        title: post.title ?? '',
-                                        description: post.description ?? '',
-                                        discountPercentage:
-                                            post.discountPercentage ?? 0.0,
-                                        category: post.category ?? '',
-                                        brand: post.brand ?? '',
-                                      ),
-                                    ),
-                                  );
-                                },
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 100,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(6),
-                                    color: Colors.white,
-                                  ),
-                                  clipBehavior: Clip.antiAlias,
-                                  child: Row(
-                                    children: [
-                                      Banner(
-                                        location: BannerLocation.topStart,
-                                        message: 'Sale',
-                                        child: Container(
-                                          width: 100,
-                                          height: 100,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              color: Colors.grey.shade300),
-                                          child: Image.network(
-                                            post.images?[0] ?? '',
-                                            errorBuilder:
-                                                (context, error, stackTrace) =>
-                                                    const Icon(Icons.error),
-                                            loadingBuilder:
-                                                (BuildContext context,
-                                                    Widget child,
-                                                    ImageChunkEvent?
-                                                        loadingProgress) {
-                                              if (loadingProgress == null) {
-                                                return child;
-                                              }
-                                              return const Center(
-                                                child:
-                                                    CupertinoActivityIndicator(
-                                                  color: Colors.black,
-                                                ),
-                                              );
-                                            },
-                                          ),
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => CardDetails(
+                                          cardInfoEntity: post,
                                         ),
                                       ),
-                                      const SizedBox(width: 30),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            MainTextWidget(
-                                              text: post.title ?? '',
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                            MainTextWidget(
-                                              text: post.category ?? '',
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                MainTextWidget(
-                                                  text:
-                                                      '\$ ${post.price ?? 0.0}',
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
-                                                Text(
-                                                  '\$ -${post.discountPercentage ?? 0.0}',
-                                                  style: const TextStyle(
-                                                    color: Colors.red,
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 16,
-                                                  ),
-                                                ),
-                                                const SizedBox(),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              );
+                                    );
+                                  },
+                                  child: ExploreItemBody(
+                                    cardInfoEntity: post, //  =>  item body
+                                  ));
                             },
                           );
                         }

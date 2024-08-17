@@ -1,22 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_test/core/common/button_widget.dart';
+import 'package:flutter_application_test/core/common/message_alert.dart';
 import 'package:flutter_application_test/core/common/text_theme.dart';
+import 'package:flutter_application_test/features/home/domain/entities/card_info_entity.dart';
+import 'package:flutter_application_test/features/home/presentation/cubit/add_to_card_cubit/add_to_cart_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CardProuductWidget extends StatelessWidget {
-  const CardProuductWidget(
-      {super.key,
-      required this.priceText,
-      required this.descriptionText,
-      required this.categoryText,
-      required this.brandText,
-      required this.discountPercentage});
-  final double priceText;
-  final String descriptionText;
-  final double discountPercentage;
-  final String categoryText;
-  final String brandText;
+class CardProuductWidget extends StatefulWidget {
+  final CardInfoEntity cardInfoEntity;
+
+  const CardProuductWidget({
+    super.key,
+    required this.cardInfoEntity,
+  });
+
+  @override
+  State<CardProuductWidget> createState() => _CardProuductWidgetState();
+}
+
+class _CardProuductWidgetState extends State<CardProuductWidget> {
   @override
   Widget build(BuildContext context) {
+    final cardInfo = widget.cardInfoEntity;
+
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 25),
       width: double.infinity,
@@ -33,11 +39,19 @@ class CardProuductWidget extends StatelessWidget {
               children: [
                 TitleTextWidget(
                   color: Colors.black,
-                  text: '\$ $priceText',
+                  text: '\$ ${cardInfo.price ?? 'N/A'}',
                 ),
                 AddToCartButton(
-                  onPressed: () {},
-                  buttonText: "Add to card",
+                  onPressed: () {
+                    const snackbar = SnackbarWidget(
+                      text: 'Item Added Successfully',
+                      backgroundColor: Colors.black,
+                    );
+                    snackbar.showCustomSnackBar(context);
+                    context.read<AddToCartCubit>().addItemToCart(cardInfo);
+                    Navigator.of(context).pop();
+                  },
+                  buttonText: "Add to cart",
                 )
               ],
             ),
@@ -47,11 +61,8 @@ class CardProuductWidget extends StatelessWidget {
               style: TextAppTheme.descriptionText,
             ),
             const SizedBox(height: 12),
-            MainTextWidget(
-              text: descriptionText,
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-            ),
+            ReadMoreWidget(
+                text: cardInfo.description ?? 'No description available'),
             const SizedBox(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -61,7 +72,7 @@ class CardProuductWidget extends StatelessWidget {
                   style: TextAppTheme.simiBoldText,
                 ),
                 Text(
-                  '\$ - $discountPercentage',
+                  '\$ - ${cardInfo.discountPercentage?.toString() ?? '0.00'}',
                   style: const TextStyle(
                     color: Colors.red,
                     fontWeight: FontWeight.w400,
@@ -79,7 +90,7 @@ class CardProuductWidget extends StatelessWidget {
                   style: TextAppTheme.simiBoldText,
                 ),
                 MainTextWidget(
-                  text: categoryText,
+                  text: cardInfo.category ?? 'Unknown',
                 ),
               ],
             ),
@@ -92,7 +103,9 @@ class CardProuductWidget extends StatelessWidget {
                   style: TextAppTheme.simiBoldText,
                 ),
                 MainTextWidget(
-                  text: brandText.isNotEmpty ? brandText : "...",
+                  text: cardInfo.brand?.isNotEmpty == true
+                      ? cardInfo.brand!
+                      : 'No brand info',
                 ),
               ],
             ),

@@ -10,6 +10,7 @@ import 'package:flutter_application_test/features/home/domain/repository/product
 import 'package:flutter_application_test/features/home/domain/repository/search_repository.dart';
 import 'package:flutter_application_test/features/home/domain/usecase/product_usecase.dart';
 import 'package:flutter_application_test/features/home/domain/usecase/search_usecase.dart';
+import 'package:flutter_application_test/features/home/presentation/cubit/add_to_card_cubit/add_to_cart_cubit.dart';
 import 'package:flutter_application_test/features/home/presentation/cubit/home_cubit/home_cubit.dart';
 import 'package:get_it/get_it.dart';
 
@@ -56,5 +57,8 @@ Future<void> init() async {
     () => GameCubit(
       GameUsecase(gameRepository: sl()),
     ),
+  );
+  sl.registerFactory<AddToCartCubit>(
+    () => AddToCartCubit(),
   );
 }
